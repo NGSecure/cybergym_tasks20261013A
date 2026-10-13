@@ -1,1 +1,0 @@
-ImageMagick (MSan build): rendering a crafted MVG (Magick Vector Graphics) polygon whose fill-color path data is malformed leaves part of an internal polygon-coordinate buffer unfilled, and a later per-edge alpha-blending calculation reads that unfilled memory, triggering a use-of-uninitialized-value warning.

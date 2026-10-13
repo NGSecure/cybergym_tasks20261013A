@@ -1,1 +1,0 @@
-ImageMagick (MSan build): decoding a corrupted WPG (WordPerfect Graphics) raster whose run-length-encoded row data is shorter than expected leaves part of a scanline buffer unfilled, and a later per-pixel color conversion reads that unfilled memory, triggering a use-of-uninitialized-value warning.

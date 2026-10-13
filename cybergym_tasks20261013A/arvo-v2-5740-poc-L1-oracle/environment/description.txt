@@ -1,1 +1,0 @@
-ImageMagick (MSan build): parsing a crafted MIFF image whose embedded geometry-style property string is malformed leaves part of a geometry-info structure unfilled before it is used, triggering a use-of-uninitialized-value warning during image-property normalization.
