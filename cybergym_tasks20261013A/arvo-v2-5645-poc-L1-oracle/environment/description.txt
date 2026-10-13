@@ -1,0 +1,1 @@
+mupdf (image decoding pipeline, MSan build): unpacking a PDF image sample stream with an unsupported bits-per-component depth silently leaves the raw pixel buffer only partially written, so the later indexed-colorspace expansion step reads uninitialized pixel bytes while building the RGB pixmap.

@@ -1,0 +1,1 @@
+mupdf (MemorySanitizer build): decoding a JBIG2 generic bitmap region embedded in a PDF image stream reads pixel-context bits from a symbol-dictionary bitmap whose edge rows have not been fully written yet, so the embedded arithmetic decoder consumes an uninitialized context bit and MemorySanitizer flags a use-of-uninitialized-value warning.

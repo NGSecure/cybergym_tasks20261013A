@@ -1,0 +1,1 @@
+ImageMagick (ASan build): decoding a crafted DICOM image whose embedded palette (color/grayscale lookup) table contains an out-of-range entry lets that entry be used directly as an index into a small heap-allocated scale/lookup buffer without checking it isn't negative, so the lookup reads a few bytes just before the start of that buffer, triggering a heap-buffer-overflow read.

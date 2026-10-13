@@ -1,0 +1,1 @@
+Skia (raster "jumper" pixel pipeline, MSan build): compositing a picture-backed image filter into a freshly allocated raster layer runs the dithering pipeline stage over destination pixel bytes that were never initialized, so the dither/store step consumes uninitialized memory when writing the blended color back into the bitmap.

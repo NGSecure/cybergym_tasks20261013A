@@ -1,0 +1,1 @@
+mupdf's bundled FreeType CFF font-hinting engine (MSan build): interpreting a Type-2 charstring curve operator for a malformed embedded font glyph pushes an unset hint-path element onto the internal glyph outline stack, so a later step in outline construction consumes that uninitialized value while building the glyph's path.

@@ -1,0 +1,1 @@
+Skia (2D graphics library, MSan build): stroking a path that contains a degenerate zero-length segment leaves part of the internal path-stroker's state on the stack unset before the join between two segments is computed, producing a use-of-uninitialized-value warning during path-filter rendering.

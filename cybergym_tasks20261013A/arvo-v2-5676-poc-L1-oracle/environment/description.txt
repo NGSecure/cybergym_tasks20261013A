@@ -1,0 +1,1 @@
+Skia (SIMD raster pipeline "Jumper" stages, MSan build): running the color-space gamut-clipping stage of the raster pipeline over a partially loaded pixel batch feeds an uninitialized color-vector lane into a per-channel clamping helper, producing a use-of-uninitialized-value warning during pixel-color post-processing.

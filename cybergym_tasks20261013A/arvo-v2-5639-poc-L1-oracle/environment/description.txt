@@ -1,0 +1,1 @@
+Skia (MemorySanitizer build): applying a matrix-convolution image filter with a deserialized edge-handling mode that was never range-checked leaves border pixels of the filter's freshly allocated output bitmap unfilled, and a later luminosity blend stage that reads that bitmap consumes the uninitialized border pixels, producing a use-of-uninitialized-value warning.

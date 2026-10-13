@@ -1,0 +1,1 @@
+ImageMagick (ASan build): encoding a crafted Photoshop (PSD) image whose embedded 8BIM resource block includes a resolution entry causes the resource-block trimming step to compute a negative byte count, and the subsequent memory copy aborts with a negative-size-parameter error.

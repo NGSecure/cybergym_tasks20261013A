@@ -1,0 +1,1 @@
+Skia (image-filter fuzz target, MSan build): applying a displacement-map image filter reads pixel data from a source bitmap region that a preceding extraction/clamping step never fully populated, so an unpremultiply helper consumes uninitialized color channel bytes, triggering a use-of-uninitialized-value warning.

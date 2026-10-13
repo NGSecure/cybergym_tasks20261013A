@@ -1,0 +1,1 @@
+Skia (ASan build): replaying a serialized SkPicture whose vertex-draw command feeds into a picture-based image filter reads a local buffer used earlier in the per-vertex rendering path after its stack scope has already exited, producing a stack-use-after-scope read during rasterization.

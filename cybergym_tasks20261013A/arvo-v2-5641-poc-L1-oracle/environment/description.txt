@@ -1,0 +1,1 @@
+mupdf (PDF shading renderer, MSan build): processing a Type 4 free-form triangle-mesh shading pattern from a crafted PDF builds a vertex record for a mesh triangle without every coordinate/color field being set, so the low-level triangle-rasterizing paint routine reads uninitialized vertex data, triggering a use-of-uninitialized-value warning.

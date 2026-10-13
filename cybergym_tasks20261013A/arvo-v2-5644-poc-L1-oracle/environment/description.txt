@@ -1,0 +1,1 @@
+Skia (raster core, MSan build): drawing a bicubic-patch/vertices primitive builds a local transform matrix on the stack that is concatenated with the canvas matrix before all of its fields are initialized, so evaluating the resulting matrix's cached transform-type flag reads uninitialized stack memory.

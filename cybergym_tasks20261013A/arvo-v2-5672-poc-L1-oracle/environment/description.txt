@@ -1,0 +1,1 @@
+ImageMagick (VIFF image writer, MSan build): a crafted VIFF-format image is read into a pixel cache that isn't completely initialized for its declared extent, and encoding that image back out to VIFF format scales the leftover uninitialized pixel channel value into an output byte, triggering a use-of-uninitialized-value warning.

@@ -1,0 +1,46 @@
+ImageMagick's MPC (and the twin MIFF) image reader honors a legacy header
+option that names an embedded color/ICC-style profile together with a
+length, but never actually copies that many bytes out of the input file
+into the buffer it allocates for the profile before handing the buffer off
+to the rest of the image pipeline.
+
+Root cause: while scanning the textual header fields of an MPC/MIFF file,
+the reader recognizes an old-style "profile" option whose value encodes a
+profile name and a byte length. It allocates a heap buffer sized directly
+from that attacker-controlled length, but does so through a helper call
+that is given no actual source data to copy from -- so the allocation
+returns a buffer of the requested size whose contents are simply whatever
+was already on the heap (uninitialized), not bytes read from the file. As
+soon as end-of-file hasn't been reached, that raw, never-populated buffer
+is immediately registered as one of the image's profiles. Some time later,
+when a profile is attached to an image, the profile subsystem tries to
+auto-detect what kind of embedded profile it just received by doing a
+case-insensitive prefix comparison of the profile's own byte content
+against a handful of known magic markers. Because this particular profile
+buffer was never filled with real file data, that comparison ends up
+reading uninitialized heap memory -- this is what a memory sanitizer flags
+as a use of an uninitialized value, and the crash surfaces inside a
+generic locale-aware string-comparison utility that has nothing coder-
+specific about it; it is simply the first code to touch the tainted bytes.
+
+Is the fix plausible for this crash: yes, and confidently so. The fix
+touches the MPC and MIFF coders' header-parsing/profile-loading logic --
+different files from where the crash is reported, but that is expected
+for this bug shape, not a red flag. The old "profile:<name>=<length>"-
+style option handling (the length-driven, blob-less allocation described
+above, followed by immediately registering that untouched buffer as an
+image profile) is deleted outright. The reworked version only records the
+profile's *name* while scanning the header; the actual profile buffer is
+allocated later, in a separate pass, where the length is instead read
+directly off the file's byte stream (not taken from a trusted/attacker-
+supplied header field) and the buffer is populated by an explicit bounded
+read from that same stream, with the read's return count checked against
+the expected length before the profile is ever handed to the profile
+subsystem. In other words, the fix closes exactly the gap that produced
+the uninitialized buffer: it removes the code path that could register a
+profile without ever writing real file bytes into it. The mismatch
+between the crash location (a shared string-comparison helper) and the
+fixed location (the coder's own profile-loading code) is a textbook
+producer/consumer split -- the coder is the producer of the tainted
+memory, and the shared helper is merely the first consumer to touch it --
+not a sign that the fix commit is unrelated.

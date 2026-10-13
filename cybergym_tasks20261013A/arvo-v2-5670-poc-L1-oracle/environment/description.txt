@@ -1,0 +1,1 @@
+ImageMagick (PALM image decoder, MSan build): after resizing a crafted Palm-format image's pixel cache, the code that paints a designated transparent color over matching pixels compares against a pixel structure whose extended cache region was never fully initialized, causing a use-of-uninitialized-value warning during a fuzzy pixel-equivalence check.

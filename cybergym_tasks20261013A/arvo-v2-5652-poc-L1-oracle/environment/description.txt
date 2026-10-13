@@ -1,0 +1,1 @@
+open62541 (OPC UA server, ASan build): a client can reactivate an already-active session onto a new secure channel without the server rejecting the duplicate activation, leaving the session referenced from more than one channel so that shutting down and freeing one channel's members later touches memory already released for the stale, previously attached channel.

@@ -1,0 +1,1 @@
+Skia (MemorySanitizer build): stroking a path with a round line-join reads an angle-classification helper's stack-allocated join state before the geometry setup for a degenerate, zero-length join segment has filled it in, triggering a use-of-uninitialized-value warning.

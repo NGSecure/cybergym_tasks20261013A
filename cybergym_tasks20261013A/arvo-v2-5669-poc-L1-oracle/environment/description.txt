@@ -1,0 +1,1 @@
+ImageMagick (PICT image decoder, MSan build): decompressing a crafted Macintosh PICT image's packed-bits pixel run doesn't fully populate the destination buffer when the run length undershoots the expected image dimensions, so a later colormap-index bounds check reads a partially uninitialized pixel value, triggering a use-of-uninitialized-value warning.
